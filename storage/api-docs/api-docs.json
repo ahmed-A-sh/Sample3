@@ -1,0 +1,406 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Pregnancy API swagger documentation",
+        "description": "Pregnancy API Documentation",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "a@a.net"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/page/{page_id}": {
+            "get": {
+                "tags": [
+                    "GeneralApiSection"
+                ],
+                "summary": "Get Static Pages  API",
+                "description": "Get Pages service : Terms and Conditions id  = 1 || Privacy and Policies id  = 2 || About Us id  = 3 ",
+                "operationId": "pages",
+                "parameters": [
+                    {
+                        "name": "page_id",
+                        "in": "path",
+                        "description": "page_id ::: Terms and Conditions id  = 1 || Privacy and Policies id  = 2 || About Us id  = 3 ",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/language"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/advices": {
+            "get": {
+                "tags": [
+                    "TextsApiSection"
+                ],
+                "summary": "Get advices API",
+                "description": "Get advices service",
+                "operationId": "advices",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page to be viewed ",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "page size def is 10 ",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/language"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AdviceResponceResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/steps": {
+            "get": {
+                "tags": [
+                    "TextsApiSection"
+                ],
+                "summary": "Get steps API",
+                "description": "Get steps service",
+                "operationId": "steps",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page to be viewed ",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "page size def is 10 ",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/language"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StepResponceResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AdviceResource": {
+                "title": "AdviceResource",
+                "properties": {
+                    "id": {
+                        "description": "id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "title": {
+                        "description": "title",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "description",
+                        "type": "string"
+                    },
+                    "source": {
+                        "description": "source",
+                        "type": "string"
+                    },
+                    "youtube_url": {
+                        "description": "youtube_url",
+                        "type": "string"
+                    },
+                    "image": {
+                        "description": "image",
+                        "type": "string"
+                    },
+                    "image_thumb": {
+                        "description": "image_thumb",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "AdviceResponceResource": {
+                "title": "AdviceResponceResource",
+                "properties": {
+                    "status": {
+                        "$ref": "#/components/schemas/Status"
+                    },
+                    "page": {
+                        "$ref": "#/components/schemas/Page"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/AdviceResponceObject"
+                    }
+                },
+                "type": "object"
+            },
+            "AdviceResponceObject": {
+                "title": "AdviceResponceObject",
+                "properties": {
+                    "advices": {
+                        "$ref": "#/components/schemas/AdviceResource"
+                    }
+                },
+                "type": "object"
+            },
+            "Status": {
+                "title": "Response Status Information",
+                "properties": {
+                    "success": {
+                        "description": "Boolean value that specifies if transaction passed successfully or not",
+                        "type": "boolean",
+                        "default": "true"
+                    },
+                    "message": {
+                        "description": "Message that need to be shown to end users if Success is not true",
+                        "type": "string",
+                        "default": "",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Page": {
+                "title": "Response Status Information",
+                "properties": {
+                    "TotalRecords": {
+                        "description": "TotalRecords",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "PagesCount": {
+                        "description": "PagesCount",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "PageNo": {
+                        "description": "PageNo",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "PageSize": {
+                        "description": "PageSize",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "type": "object"
+            },
+            "NoData": {
+                "title": "NoData",
+                "properties": {
+                    "status": {
+                        "$ref": "#/components/schemas/Status"
+                    },
+                    "data": {
+                        "description": "out data",
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "PageResource": {
+                "title": "PageResource",
+                "properties": {
+                    "status": {
+                        "$ref": "#/components/schemas/Status"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/PageDet"
+                    }
+                },
+                "type": "object"
+            },
+            "PageDet": {
+                "title": "PageObject",
+                "properties": {
+                    "page": {
+                        "$ref": "#/components/schemas/PageObject"
+                    }
+                },
+                "type": "object"
+            },
+            "PageObject": {
+                "title": "PageObject",
+                "properties": {
+                    "id": {
+                        "description": "id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "title": {
+                        "description": "title",
+                        "type": "string"
+                    },
+                    "text": {
+                        "description": "text",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "StepResource": {
+                "title": "StepResource",
+                "properties": {
+                    "id": {
+                        "description": "id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "title": {
+                        "description": "title",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "description",
+                        "type": "string"
+                    },
+                    "source": {
+                        "description": "source",
+                        "type": "string"
+                    },
+                    "image": {
+                        "description": "image",
+                        "type": "string"
+                    },
+                    "image_thumb": {
+                        "description": "image_thumb",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "StepResponceResource": {
+                "title": "StepResponceResource",
+                "properties": {
+                    "status": {
+                        "$ref": "#/components/schemas/Status"
+                    },
+                    "page": {
+                        "$ref": "#/components/schemas/Page"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/StepResponceObject"
+                    }
+                },
+                "type": "object"
+            },
+            "StepResponceObject": {
+                "title": "StepResponceObject",
+                "properties": {
+                    "steps": {
+                        "$ref": "#/components/schemas/StepResource"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "parameters": {
+            "language": {
+                "name": "language",
+                "in": "header",
+                "description": "resopnse language : ar for arabic || en for english",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "device_key": {
+                "name": "device_key",
+                "in": "header",
+                "description": "device_key send to determine image liked or no",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        },
+        "securitySchemes": {
+            "api_key": {
+                "type": "apiKey",
+                "description": "send Bearer token",
+                "name": "Authorization",
+                "in": "header",
+                "scheme": "Bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "GeneralApiSection",
+            "description": "API Package for retrieving data requests"
+        },
+        {
+            "name": "TextApiSection",
+            "description": "API Package for retrieving data requests"
+        }
+    ],
+    "security": [
+        {
+            "api_key": []
+        }
+    ]
+}
